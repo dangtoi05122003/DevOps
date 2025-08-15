@@ -1,0 +1,16 @@
+name: Automation TIKI
+on:
+    push:
+        branches: [ "*" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v4
+      - name: Build Docker
+        run: |
+          docker build -t tiki-automation:latest .
+      - name: Run Docker
+        run: |
+          docker run --rm --network host tiki-automation:latest python /app/index.py
